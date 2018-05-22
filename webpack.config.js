@@ -1,7 +1,6 @@
 'use strict'
 
 const path = require('path')
-const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -13,13 +12,15 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.png$/,
+        use: {
+          loader: 'file-loader',
           options: {
-            presets: ['@babel/preset-env'],
-            plugins: [
-              require('babel-plugin-syntax-dynamic-import')
-//              require('babel-plugin-transform-async-to-generator')
-            ]
+            name: process.env['WEBPACK_PROFILE'] === 'development' ? '[name].[ext]' : '[hash].[ext]'
           }
         }
       }
@@ -27,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Lizard Quest',
+      title: 'Lizard Quest'
     })
   ],
   output: {
